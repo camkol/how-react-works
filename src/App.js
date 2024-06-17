@@ -71,19 +71,38 @@ function TabContent({ item }) {
   console.log("RENDER");
 
   function handleInc() {
-    setLikes(likes + 1);
+    // could only be use once
+    // setLikes(likes + 1);
+
+    // best to use a callback
+    setLikes((likes) => likes + 1);
   }
 
   function handleTripleInc() {
-    setLikes(likes + 1);
-    setLikes(likes + 1);
-    setLikes(likes + 1);
+    // Not the way to do it
+    //   setLikes(likes + 1);
+    //   setLikes(likes + 1);
+    //   setLikes(likes + 1);
+
+    // This is a good reason for callback functions
+    setLikes((likes) => likes + 1);
+    setLikes((likes) => likes + 1);
+    setLikes((likes) => likes + 1);
+
+    // great once handleInc is made to a callback
+    // handleInc();
+    // handleInc();
+    // handleInc();
   }
 
   function handleUndo() {
     setShowDetails(true);
     setLikes(0);
     console.log(likes);
+  }
+
+  function handleUndoLater() {
+    setTimeout(handleUndo, 2000);
   }
 
   return (
@@ -105,7 +124,7 @@ function TabContent({ item }) {
 
       <div className="tab-undo">
         <button onClick={handleUndo}>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleUndoLater}>Undo in 2s</button>
       </div>
     </div>
   );
